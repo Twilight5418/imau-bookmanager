@@ -22,5 +22,9 @@ public class UserController {
     public Response<User> registerUser(@RequestBody User user) {
         return userService.registerUser(user);
     }
-
+    // 登录用户
+    @PostMapping("/login")
+    public String loginUser(@RequestBody User user) {
+        return userService.login(user);
+    }
 }
