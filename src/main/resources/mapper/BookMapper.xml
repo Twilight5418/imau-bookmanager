@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- MyBatis Mapper 文件，用于映射 SQL 语句到 DAO 接口中的方法 -->
+<mapper namespace="org.example.imaubookmanager.dao.BookDao">
+    <!-- namespace 属性指向了 DAO 接口类的全路径，这样 MyBatis 可以将接口中的方法与映射文件中的 SQL 语句关联起来 -->
+
+    <!-- 查询单本书籍，通过 book_id 进行查询 -->
+    <!-- id 属性指定了该 SQL 语句的唯一标识，parameterType 指定传入参数的类型，resultType 指定查询结果映射到哪个 Java 类 -->
+    <select id="selectBookById" parameterType="int" resultType="org.example.imaubookmanager.pojo.Book">
+        SELECT
+            book_id AS bookId,  <!-- 数据库中的 book_id 字段映射到 Java 类中的 bookId 属性 -->
+            book_name AS bookName,  <!-- 数据库中的 book_name 字段映射到 Java 类中的 bookName 属性 -->
+            book_isbn AS bookIsbn,  <!-- 数据库中的 book_isbn 字段映射到 Java 类中的 bookIsbn 属性 -->
+            book_price AS bookPrice,  <!-- 数据库中的 book_price 字段映射到 Java 类中的 bookPrice 属性 -->
+            book_writer AS bookWriter  <!-- 数据库中的 book_writer 字段映射到 Java 类中的 bookWriter 属性 -->
+        FROM book
+        WHERE book_id = #{bookId}  <!-- 通过 book_id 查询指定的书籍信息 -->
+    </select>
+
+    <!-- 查询所有书籍信息 -->
+    <!-- resultType 指定返回结果是 Book 类的列表 -->
+    <select id="selectAllBooks" resultType="org.example.imaubookmanager.pojo.Book">
+        SELECT
+            book_id AS bookId,  <!-- 映射字段到类属性 -->
+            book_name AS bookName,
+            book_isbn AS bookIsbn,
+            book_price AS bookPrice,
+            book_writer AS bookWriter
+        FROM book
+    </select>
+
+    <!-- 插入一条新书籍记录，主键自增 -->
+    <!-- useGeneratedKeys 设置为 true 表示使用数据库生成的主键，keyProperty 指定实体类中主键的属性名称 -->
+    <insert id="insertBook" parameterType="org.example.imaubookmanager.pojo.Book" useGeneratedKeys="true" keyProperty="bookId">
+        INSERT INTO book (book_name, book_isbn, book_price, book_writer)  <!-- 插入书籍的名称、ISBN、价格和作者信息 -->
+        VALUES (#{bookName}, #{bookIsbn}, #{bookPrice}, #{bookWriter})  <!-- #{属性名} 表示从实体类中获取相应的属性值 -->
+    </insert>
+
+    <!-- 更新书籍信息，通过 book_id 进行更新 -->
+    <update id="updateBook" parameterType="org.example.imaubookmanager.pojo.Book">
+        UPDATE book
+        SET book_name = #{bookName},  <!-- 更新书名 -->
+            book_isbn = #{bookIsbn},  <!-- 更新书籍 ISBN -->
+            book_price = #{bookPrice},  <!-- 更新书籍价格 -->
+            book_writer = #{bookWriter}  <!-- 更新书籍作者 -->
+        WHERE book_id = #{bookId}  <!-- 通过 book_id 指定要更新的书籍 -->
+    </update>
+
+    <!-- 根据 book_id 删除书籍记录 -->
+    <delete id="deleteBookById" parameterType="int">
+        DELETE FROM book WHERE book_id = #{bookId}  <!-- 通过 book_id 删除指定的书籍 -->
+    </delete>
+
+</mapper>

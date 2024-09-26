@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/imau-book
+    username: root
+    password: 5457hzcx
+    driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis:
+  mapper-locations: classpath:mapper/*.xml  # Mapper XML???????????resources/mapper???
+  type-aliases-package: org.example.imaubookmanager.pojo  # ??MyBatis?TypeAlias????POJO?????
+
