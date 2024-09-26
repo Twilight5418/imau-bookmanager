@@ -1,5 +1,6 @@
 package org.example.imaubookmanager.controller;
 
+import org.example.imaubookmanager.pojo.Response;
 import org.example.imaubookmanager.pojo.User;
 import org.example.imaubookmanager.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,10 @@ public class UserController {
     private UserService userService;
 
     // 注册用户
-
+    //@RequestBody 注解表示从客户端的 HTTP 请求体 中获取 JSON 数据，并将这些数据映射成一个 User 对象。
     @PostMapping("/register")
-    public String registerUser(@RequestBody User user) {
-        //@RequestBody 注解表示从客户端的 HTTP 请求体 中获取 JSON 数据，并将这些数据映射成一个 User 对象。
-        return userService.registerUser(user);//这个方法的返回类型是 String，意味着该方法返回一个字符串
+    public Response<User> registerUser(@RequestBody User user) {
+        return userService.registerUser(user);
     }
+
 }

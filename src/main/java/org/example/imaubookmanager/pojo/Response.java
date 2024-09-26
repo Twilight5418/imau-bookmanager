@@ -1,23 +1,40 @@
 package org.example.imaubookmanager.pojo;
 
 public class Response<T> {
-    private boolean success;
-    private String message;
-    private T data;
+    private int code;          // 响应状态码
+    private String message;    // 响应信息
+    private T data;            // 响应数据
 
-    public Response(boolean success, String message, T data) {
-        this.success = success;
+    public Response() {}
+
+    public Response(int code, String message, T data) {
+        this.code = code;
         this.message = message;
         this.data = data;
     }
 
-    public static <T> Response<T> success(T data) {
-        return new Response<>(true, "操作成功", data);
+    // Getter 和 Setter 方法
+    public int getCode() {
+        return code;
     }
 
-    public static <T> Response<T> failure(String message, T data) {
-        return new Response<>(false, message, data); // data 允许为 null
+    public void setCode(int code) {
+        this.code = code;
     }
 
-    // Getters and setters
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
 }
